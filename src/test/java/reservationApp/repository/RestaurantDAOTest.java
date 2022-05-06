@@ -14,13 +14,17 @@ class RestaurantDAOTest {
 	@Test
 	void insertRestaurant() {
 		dao.insertRestaurant("양자강","중식", 30);
-		
 		fail("Not yet implemented");
 	}
 	
 //	@Test
 //	void deleteRestaurant() {
-//		Assertions.assertEquals(1, dao.deleteRestaurant(1));
+//		Assertions.assertEquals(1, dao.deleteRestaurant(2));
 //	}
+	
+	@Test
+	void listRestaurant() {
+		dao.listRestaurant();
+	}
 
 }

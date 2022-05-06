@@ -35,10 +35,8 @@ public class ReservationDTO {
 
 	@Override
 	public String toString() {
-		return "ReservationDTO [reservation_id=" + reservation_id + ", reservation_date=" + reservation_date
-				+ ", reservation_time=" + reservation_time + ", requested_date=" + requested_date + ", requested_time="
-				+ requested_time + ", seat=" + seat + ", name=" + name + ", phone=" + phone + ", reservation_state="
-				+ reservation_state + ", resturant_name=" + restDTO.getRestaurant_name() + "]";
+		return String.format("예약번호: %d\n예약일: %s\n예약시간: %s\n예약요정일:%s,%s\n인원수: %d\n성함: %s\n연락처: %s\n예약상태: %d\n음식점: %s\n", 
+				reservation_id, reservation_date, reservation_time, requested_date,requested_time,seat,name,phone,reservation_state,restDTO.getRestaurant_name());
 	}
 
 	

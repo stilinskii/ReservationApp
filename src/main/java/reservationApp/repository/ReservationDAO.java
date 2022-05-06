@@ -118,26 +118,57 @@ public class ReservationDAO {
 		return store.values().stream().filter(value -> value.getReservation_id()==id).findAny();
 	}
 	
+	
+	
 	public void clearStore() {
 		store.clear();
 	}
 	
 	
 	
-	public void deleteReservation(int reservation_id) {
-		
+	public int deleteReservation(int reservation_id) {
+		int chk = -1;
 		try {
 			conn=JdbcTemplate.getConnection();
-			String sql = "";
+			String sql = "delete from reservationtest where reservation_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reservation_id);
 			
+			chk = pstmt.executeUpdate();
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+			
+		}
+		
+		return chk;
+	}
+	
+	public int updateReservationStatus(int statusNum, int reserv_id){
+		int chk = -1;
+		try {
+			String sql = "UPDATE reservationtest SET reservation_state = ? WHERE RESERVATION_ID=?";
+			pstmt = JdbcTemplate.getConnection().prepareStatement(sql);
+			pstmt.setInt(1, statusNum);
+			pstmt.setInt(2, reserv_id);
+			
+			chk=pstmt.executeUpdate();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+			
 		}
 		
 		
+		return chk;
 	}
-	
 	
 }

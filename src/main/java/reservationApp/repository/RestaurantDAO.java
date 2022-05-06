@@ -25,28 +25,45 @@ public class RestaurantDAO {
 	//음식점아이디, 이름 프린트하는 메서드
 	public void listRestaurant() {
 		
+		try {
+			String sql = "select RESTAURANT_ID,RESTAURANT_NAME from restaurantstest";
+			rs = JdbcTemplate.getConnection().createStatement().executeQuery(sql);
+			
+			while(rs.next()) {
+				System.out.println(rs.getInt(1) + "  " + rs.getString(2));
+				
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(stmt);
+			JdbcTemplate.close(conn);
+		}
+		
+		
 	}
 	
+	
+	//예약번호생성
 	SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
 	
-	private static int sequence = 0;
-	
-	// 적용이 안됨;; 
 	
 	public int insertRestaurant(String name, String type, int max_seat){
 		
 		int chk = -1;
 		try {
 			conn = JdbcTemplate.getConnection();
-			String sql = "insert into restaurantstest values(?,?,?,?,?,?,?,null)";
+			String sql = "insert into restaurantstest values(restaurantstest_num_seq.nextval,?,?,?,?,?,?,null)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, Integer.parseInt(sdf.format(new Date()))); //id
-			pstmt.setString(2, name); //name
-			pstmt.setString(3, type); // type
-			pstmt.setInt(4, max_seat); // max
-			pstmt.setInt(5, 0); //reserved
-			pstmt.setInt(6, max_seat); // available
-			pstmt.setString(7, "O"); // status
+			//pstmt.setInt(1, Integer.parseInt(sdf.format(new Date()))); //id
+			pstmt.setString(1, name); //name
+			pstmt.setString(2, type); // type
+			pstmt.setInt(3, max_seat); // max
+			pstmt.setInt(4, 0); //reserved
+			pstmt.setInt(5, max_seat); // available
+			pstmt.setString(6, "O"); // status
 			
 			
 			chk = pstmt.executeUpdate();
@@ -83,8 +100,5 @@ public class RestaurantDAO {
 		return chk;
 	}
 	
-	public void updateReservationStatus(){
-		//예약 구현 후
-		
-	}
+	
 }
