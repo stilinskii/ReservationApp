@@ -25,6 +25,8 @@ public class MainApp {
 			switch (num){
 			case 1:reserve();break;
 			case 2:searchReservation();break;
+			case 3:deleteReservation();break;
+			case 4:toAdminMenu();break;
 			case 0:return;
 			}
 					
@@ -79,7 +81,41 @@ public class MainApp {
 		System.out.print("예약번호를 입력해주세요: ");
 		int reservation_id = sc.nextInt();
 		mainmenu.cancelReservation(reservation_id);
+		System.out.println("에약 취소가 완료되었습니다.");
 		
 	}
+	
+	//관리자메뉴로 이동
+	public static void toAdminMenu() {
+		
+		while(true) {
+			System.out.println("[관리자 페이지]");
+			System.out.println("1: 음식점 등록하기\r\n"
+					+ "2: 음식점 삭제하기\r\n"
+					+ "3: 메뉴 등록하기\r\n"
+					+ "4: 메뉴 삭제하기\r\n"
+					+ "5: 예약 승인하기\r\n"
+					+ "6: 예약 취소하기\r\n"
+					+ "7: 음식점 목록 보기 \r\n"
+					+ "8: 예약내역 목록 보기\r\n"
+					+ "9: 예약불가 날짜 설정하기\r\n"
+					+ "0: 메인메뉴로 이동\r\n"
+					+ "");
+			System.out.print("메뉴를 선택하세요: ");
+			int num = sc.nextInt();		
+			
+			switch (num){
+			case 0:return;
+			}
+			
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
 
 }

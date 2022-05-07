@@ -48,9 +48,9 @@ class ReservationDAOTest {
 //	}
 	
 
-//	@Test
-//	void updateReservationStatus() {
-//		dao.updateReservationStatus(3, 21712);
-//	}
+	@Test
+	void updateReservationStatus() {
+		dao.updateReservationStatus(1, 22543);
+	}
 
 }
