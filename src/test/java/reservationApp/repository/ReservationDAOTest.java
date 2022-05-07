@@ -22,24 +22,24 @@ class ReservationDAOTest {
 //	}
 	
 //	
-	@Test
-	void insertReservation() {
-		//insertReservation(String reservation_date,String reservation_time,int seat,String name, String phone, int rest_id)
-		dao.insertReservation("20220909","12:00",4,"하영d","010-5555-5555",3);
-		fail("Not yet implemented");
-	}
-	
 //	@Test
-//	void findReservationById() {
-//		ReservationDTO dto = dao.findReservationById(55).get();
-//		System.out.println(dto);
+//	void insertReservation() {
+//		//insertReservation(String reservation_date,String reservation_time,int seat,String name, String phone, int rest_id)
+//		dao.insertReservation("20220909","12:00",4,"하영d","010-5555-5555",3);
+//		fail("Not yet implemented");
 //	}
-//	
+	
 	@Test
-	void findAll() {
-		dao.findAll().forEach(value -> System.out.println(value));
-		
+	void findReservationById() {
+		ReservationDTO dto = dao.findReservationById(22543).get();
+		System.out.println(dto);
 	}
+//	
+//	@Test
+//	void findAll() {
+//		dao.findAll().forEach(value -> System.out.println(value));
+//		//값이 쌓이지 않고 날라감?
+//	}
 	
 //	@Test
 //	void deleteReservation() {

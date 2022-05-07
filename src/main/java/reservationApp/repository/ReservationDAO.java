@@ -92,7 +92,7 @@ public class ReservationDAO {
 			pstmt.setInt(1, Integer.parseInt(sdf.format(new Date())));//예약아이디
 			pstmt.setString(2, reservation_date);//예약일 20090417형식으로
 			pstmt.setString(3, reservation_time);//예약시간 15:00형식으로
-			pstmt.setInt(4, seat);//예약시간 15:00형식으로
+			pstmt.setInt(4, seat);
 			pstmt.setString(5, name);
 			pstmt.setString(6, phone);
 			pstmt.setInt(7, rest_id);
@@ -113,9 +113,9 @@ public class ReservationDAO {
 	}
 	
 	
-	public Optional<ReservationDTO> findReservationById(int id) {
-	
-		return store.values().stream().filter(value -> value.getReservation_id()==id).findAny();
+	public Optional<ReservationDTO> findReservationById(int reservation_id) {
+		findAll();
+		return store.values().stream().filter(value -> value.getReservation_id()==reservation_id).findAny();
 	}
 	
 	
