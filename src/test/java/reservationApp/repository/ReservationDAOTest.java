@@ -28,12 +28,12 @@ class ReservationDAOTest {
 //		dao.insertReservation("20220909","12:00",4,"하영d","010-5555-5555",3);
 //		fail("Not yet implemented");
 //	}
-	
-	@Test
-	void findReservationById() {
-		ReservationDTO dto = dao.findReservationById(22543).get();
-		System.out.println(dto);
-	}
+//	
+//	@Test
+//	void findReservationById() {
+//		ReservationDTO dto = dao.findReservationById(22543).get();
+//		System.out.println(dto);
+//	}
 //	
 //	@Test
 //	void findAll() {

@@ -5,8 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Optional;
 
 public class RestaurantDAO {
 	private Connection conn;
@@ -22,15 +21,16 @@ public class RestaurantDAO {
 		return restaurantDAO;
 	}
 	
-	//음식점아이디, 이름 프린트하는 메서드
+	//음식점정보 프린트하는 메서드
 	public void listRestaurant() {
 		
 		try {
-			String sql = "select RESTAURANT_ID,RESTAURANT_NAME from restaurantstest";
+			String sql = "select RESTAURANT_ID,RESTAURANT_NAME,AVAILABLE_SEAT,AVAILABLE_STATE from restaurantstest";
 			rs = JdbcTemplate.getConnection().createStatement().executeQuery(sql);
 			
 			while(rs.next()) {
-				System.out.println(rs.getInt(1) + "  " + rs.getString(2));
+				System.out.println("["+rs.getInt(1)+"]" + "  " + rs.getString(2) 
+				+ "   남은자리:"+rs.getInt(3)+"개");
 				
 			}
 		} catch (ClassNotFoundException | SQLException e) {
@@ -46,16 +46,15 @@ public class RestaurantDAO {
 	}
 	
 	
-	//예약번호생성
-	SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
 	
 	
-	public int insertRestaurant(String name, String type, int max_seat){
+	
+	public int insertRestaurant(String name, String type, int max_seat, String manager_pw){
 		
 		int chk = -1;
 		try {
 			conn = JdbcTemplate.getConnection();
-			String sql = "insert into restaurantstest values(restaurantstest_num_seq.nextval,?,?,?,?,?,?,null)";
+			String sql = "insert into restaurantstest values(restaurantstest_num_seq.nextval,?,?,?,?,?,?,null,?)";
 			pstmt = conn.prepareStatement(sql);
 			//pstmt.setInt(1, Integer.parseInt(sdf.format(new Date()))); //id
 			pstmt.setString(1, name); //name
@@ -64,6 +63,7 @@ public class RestaurantDAO {
 			pstmt.setInt(4, 0); //reserved
 			pstmt.setInt(5, max_seat); // available
 			pstmt.setString(6, "O"); // status
+			pstmt.setString(7, manager_pw); // manager_pw
 			
 			
 			chk = pstmt.executeUpdate();
@@ -100,5 +100,24 @@ public class RestaurantDAO {
 		return chk;
 	}
 	
+	//비밀번호에다른 음식점 아이디
+	public Optional<Integer> findByPw(String managerPW) throws SQLException, ClassNotFoundException {
+		
+		int restaurant_id = 0;
+		
+			conn = JdbcTemplate.getConnection();
+			String sql = "SELECT restaurant_id FROM restaurantstest WHERE manager_pw=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, managerPW);
+			rs = pstmt.executeQuery();
+			rs.next();
+			
+			restaurant_id = rs.getInt(1);
+			
+
+		return Optional.of(restaurant_id);
+	}
+	
+
 	
 }

@@ -24,6 +24,12 @@ public class RestaurantDTO {
 		this.reserved_seat = reserved_seat;
 		this.available_state = available_state;
 	}
+	
+	@Override
+	public String toString() {
+		
+		return super.toString();
+	}
 
 
 	public int getRestaurant_id() {

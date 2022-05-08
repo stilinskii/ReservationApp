@@ -2,6 +2,8 @@ package test.java.reservationApp.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.SQLException;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -11,11 +13,11 @@ class RestaurantDAOTest {
 	
 	RestaurantDAO dao = RestaurantDAO.getInstance();
 
-	@Test
-	void insertRestaurant() {
-		dao.insertRestaurant("양자강","중식", 30);
-		fail("Not yet implemented");
-	}
+//	@Test
+//	void insertRestaurant() {
+//		dao.insertRestaurant("양자강","중식", 30);
+//		fail("Not yet implemented");
+//	}
 	
 //	@Test
 //	void deleteRestaurant() {
@@ -27,4 +29,8 @@ class RestaurantDAOTest {
 		dao.listRestaurant();
 	}
 
+	@Test
+	void findByPw() throws ClassNotFoundException, SQLException {
+		System.out.println(dao.findByPw("abc12").get());
+	}
 }
