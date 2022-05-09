@@ -36,8 +36,8 @@ class ReservationDAOTest {
 //	}
 //	
 //	@Test
-//	void findAll() {
-//		dao.findAll().forEach(value -> System.out.println(value));
+//	void reservationList() {
+//		dao.reservationList().forEach(value -> System.out.println(value));
 //		//값이 쌓이지 않고 날라감?
 //	}
 	

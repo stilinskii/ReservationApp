@@ -25,30 +25,36 @@ public class ReservationService {
 	}
 	
 	public Optional<ReservationDTO> findReservationById(int reservation_id) {
-		return reserDAO.findAll().stream().filter(value -> value.getReservation_id() == reservation_id).findAny();
-	}
-
-	
-	
-	
-	//관리자마자 다르게 예약대기목록 출력
-	public void waitingReservations(String managerPW) {
-		try {
-			Object[] res = findReservationByRestaurant(restDAO.findByPw(managerPW).get());
-			for(Object ress:res) {
-				if(((ReservationDTO)(ress)).getReservation_state_num()==1) {
-					System.out.println(ress);
-				}
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	public Object[] findReservationByRestaurant(int restaurant_id) {
+		return reserDAO.reservationList().stream()
+				.filter(value -> value.getReservation_id() == reservation_id).findAny();
 		
-		return reserDAO.findAll().stream().filter(value -> value.getRestDTO().getRestaurant_id() == restaurant_id).toArray();
+	}
+
+	
+	
+	
+	//레스토랑마다 다르게 예약대기목록 출력
+	public void waitingReservations(String managerPW) {
+	
+		
+			findReservationByRestaurant(restDAO.findByPw(managerPW).get()).stream()
+				.filter(value -> value.getReservation_state_num() == 1)
+				.forEach(value -> System.out.println(value));
+		
+		
+		
+	}
+	
+	//레스토랑마다 예약내역목록
+	public List<ReservationDTO> findReservationByRestaurant(int restaurant_id) {
+		List<ReservationDTO> alist = new ArrayList<>();
+		reserDAO.reservationList().stream().filter(value -> value.getRestDTO().getRestaurant_id() == restaurant_id).forEach(e -> alist.add(e));
+		
+		return alist;
+	}
+	
+
+		
 	}
 	
 	
@@ -56,4 +62,4 @@ public class ReservationService {
 
 	
 
-}
+

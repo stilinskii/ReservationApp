@@ -28,10 +28,10 @@ public class ReservationDAO {
 		return reservationDAO;
 	}
 
-	static Map<Integer, ReservationDTO> store = new HashMap<>();
 
 	// 목록출력
-	public List<ReservationDTO> findAll() {
+	public List<ReservationDTO> reservationList() {
+		List<ReservationDTO> store = new ArrayList<>();
 		try {
 			conn = JdbcTemplate.getConnection();
 			String sql = "select rser.restaurant_id,reservation_id,TO_CHAR(reservation_date,'yyyy/mm/dd'),TO_CHAR(reservation_time,'hh24:mi'),TO_CHAR(requested_date,'yyyy/mm/dd'), TO_CHAR(requested_time,'hh24:mi'),seat,guest_name,guest_phone,reservation_state,restaurant_name "
@@ -54,7 +54,7 @@ public class ReservationDAO {
 						rs.getString("guest_name"), rs.getString("guest_phone"), rs.getInt("reservation_state"),
 						restDTO);
 
-				store.put(reserDTO.getReservation_id(), reserDTO);
+				store.add(reserDTO);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
@@ -64,7 +64,7 @@ public class ReservationDAO {
 			JdbcTemplate.close(conn);
 		}
 
-		return new ArrayList<>(store.values());
+		return store;
 	}
 
 	
@@ -102,9 +102,9 @@ public class ReservationDAO {
 
 
 
-	public void clearStore() {
-		store.clear();
-	}
+//	public void clearStore() {
+//		store.clear();
+//	}
 
 	public int deleteReservation(int reservation_id) {
 		int chk = -1;

@@ -33,7 +33,7 @@ public class RestaurantController {
 		return restDAO.findByPw(managerPW).isPresent();
 	}
 	
-	
+	//음식점들 리스트
 	public void restaurantList() {
 		restDAO.listRestaurant();
 	}

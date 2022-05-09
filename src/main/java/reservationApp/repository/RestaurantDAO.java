@@ -26,12 +26,13 @@ public class RestaurantDAO {
 	public void listRestaurant() {
 		
 		try {
-			String sql = "select RESTAURANT_ID,RESTAURANT_NAME,AVAILABLE_SEAT,AVAILABLE_STATE from restaurantstest";
+			
+			String sql = "select RESTAURANT_ID,RESTAURANT_NAME,RESTAURANT_TYPE,AVAILABLE_SEAT,AVAILABLE_STATE from restaurantstest";
 			rs = JdbcTemplate.getConnection().createStatement().executeQuery(sql);
 			
 			while(rs.next()) {
-				System.out.println("["+rs.getInt(1)+"]" + "  " + rs.getString(2) 
-				+ "   남은자리:"+rs.getInt(3)+"개");
+				System.out.println("["+rs.getInt(1)+"]" + "  " + rs.getString(2) + "  " + rs.getString(3)
+				+ "   남은자리:"+rs.getInt(4)+"개");
 				
 			}
 		} catch (ClassNotFoundException | SQLException e) {
@@ -103,18 +104,23 @@ public class RestaurantDAO {
 	}
 	
 	//비밀번호에다른 음식점 아이디
-	public Optional<Integer> findByPw(String managerPW) throws SQLException, ClassNotFoundException {
+	public Optional<Integer> findByPw(String managerPW)  {
 		
 		int restaurant_id = 0;
 		
-			conn = JdbcTemplate.getConnection();
-			String sql = "SELECT restaurant_id FROM restaurantstest WHERE manager_pw=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, managerPW);
-			rs = pstmt.executeQuery();
-			rs.next();
-			
-			restaurant_id = rs.getInt(1);
+			try {
+				conn = JdbcTemplate.getConnection();
+				String sql = "SELECT restaurant_id FROM restaurantstest WHERE manager_pw=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, managerPW);
+				rs = pstmt.executeQuery();
+				rs.next();
+				
+				restaurant_id = rs.getInt(1);
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 
 		return Optional.of(restaurant_id);

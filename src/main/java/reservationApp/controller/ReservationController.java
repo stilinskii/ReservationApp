@@ -35,13 +35,9 @@ public class ReservationController {
 		reserService.statusChk(reservation_id); // 확정된 예약 취소 못하게
 	}
 
-	// 레스토랑 각각 예약 전체 목록
-	public void reservationList(String managerPW) {
-		try {
-			reserService.findReservationByRestaurant(restDAO.findByPw(managerPW).get());
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+	// 레스토랑 각각 예약 전체 목록 출력
+	public void reservationList(String managerPW){
+		reserService.findReservationByRestaurant(restDAO.findByPw(managerPW).get()).forEach(e -> System.out.println(e));
 	}
 
 	// 레스토랑 각각 예약대기목록
@@ -49,13 +45,13 @@ public class ReservationController {
 		reserService.waitingReservations(managerPW);
 	}
 
-	// 관리자가 예약거절
+	// 관리자가 예약거절 
 	public void refuseReservation(int reservation_id) {
 		int chk = reserDAO.updateReservationStatus(4, reservation_id);
 		System.out.println(chk + "개 예약거절 완료");
 	}
 
-	// 관리자가 예약승인
+	// 관리자가 예약승인 --예약이 없을떄?..
 	public void comfirmReservations(int reservation_id) {
 		int chk = reserDAO.updateReservationStatus(2, reservation_id);
 		System.out.println(chk + "개 예약승인 완료");
