@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.Optional;
 
@@ -79,16 +80,17 @@ public class RestaurantDAO {
 		return chk;
 	}
 	
-	public int deleteRestaurant(int restaurant_id){
+	public int deleteRestaurant(String managerPw){
 		int chk=-1;;
 		try {
 			conn = JdbcTemplate.getConnection();
-			String sql = "DELETE FROM restaurantstest WHERE restaurant_id=?";
+			String sql = "DELETE FROM restaurantstest WHERE manager_pw=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, restaurant_id);
+			pstmt.setString(1, managerPw);
 			 chk = pstmt.executeUpdate();
 			
-			
+		}catch(SQLIntegrityConstraintViolationException e) {
+			System.out.println("남은 예약이 존재합니다.");
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

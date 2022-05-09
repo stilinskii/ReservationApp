@@ -1,5 +1,8 @@
 package main.java.reservationApp.service;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -27,10 +30,29 @@ public class ReservationService {
 
 	
 	
-	public void findReservationByRestaurant(int restaurant_id) {
-		reserDAO.findAll().stream().filter(value -> value.getRestDTO().getRestaurant_id() == restaurant_id)
-				.forEach(e -> System.out.println(e));
+	
+	//관리자마자 다르게 예약대기목록 출력
+	public void waitingReservations(String managerPW) {
+		try {
+			Object[] res = findReservationByRestaurant(restDAO.findByPw(managerPW).get());
+			for(Object ress:res) {
+				if(((ReservationDTO)(ress)).getReservation_state_num()==1) {
+					System.out.println(ress);
+				}
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
+	
+	
+	public Object[] findReservationByRestaurant(int restaurant_id) {
+		
+		return reserDAO.findAll().stream().filter(value -> value.getRestDTO().getRestaurant_id() == restaurant_id).toArray();
+	}
+	
+	
+	
 
 	
 
