@@ -37,7 +37,7 @@ public class ReservationDTO {
 	@Override
 	public String toString() {
 		setReservation_state_String();
-		return String.format("예약번호: %d\n음식점: %s\n예약일: %s\n예약시간: %s\n예약요정일, 시간:%s,%s\n인원수: %d\n성함: %s\n연락처: %s\n예약상태: %s\n", 
+		return String.format("예약번호: %d\n음식점: %s\n예약일: %s\n예약시간: %s\n예약요정일, 시간:%s,%s\n인원수: %d\n성함: %s\n연락처: %s\n예약상태: %s", 
 				reservation_id, restDTO.getRestaurant_name(),reservation_date, reservation_time, requested_date,requested_time,seat,name,phone,reservation_state_String);
 	}
 

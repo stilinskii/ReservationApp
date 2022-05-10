@@ -30,7 +30,7 @@ class RestaurantDAOTest {
 //	}
 //
 //	@Test
-//	void findByPw() throws ClassNotFoundException, SQLException {
-//		System.out.println(dao.findByPw("abc12").get());
+//	void findRestaurantIdByPw() throws ClassNotFoundException, SQLException {
+//		System.out.println(dao.findRestaurantIdByPw("abc12").get());
 //	}
 }

@@ -18,7 +18,6 @@ public class RestaurantController {
 	
 	//음식점 등록
 	public void addRestaurant(String name, String type, int max_seat, String manager_pw) {
-		//String name, String type, int max_seat, String manager_pw//최대10자
 		restDAO.insertRestaurant(name, type, max_seat, manager_pw);
 	}
 	
@@ -30,7 +29,7 @@ public class RestaurantController {
 	
 	// 비밀번호 인증
 	public boolean chkManagerPw(String managerPW) throws ClassNotFoundException, SQLException {
-		return restDAO.findByPw(managerPW).isPresent();
+		return restDAO.findRestaurantIdByPw(managerPW).isPresent();
 	}
 	
 	//음식점들 리스트
@@ -38,6 +37,10 @@ public class RestaurantController {
 		restDAO.listRestaurant();
 	}
 
+	//비밀번호로 음식점 이름 불러오기
+	public String findRestaurantNameByPw(String managerPW) {
+		return restDAO.findRestaurantNameByPw(managerPW);
+	}
 	
 	//예약불가날자 설정
 }

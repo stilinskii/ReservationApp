@@ -104,7 +104,7 @@ public class RestaurantDAO {
 	}
 	
 	//비밀번호에다른 음식점 아이디
-	public Optional<Integer> findByPw(String managerPW)  {
+	public Optional<Integer> findRestaurantIdByPw(String managerPW)  {
 		
 		int restaurant_id = 0;
 		
@@ -125,6 +125,30 @@ public class RestaurantDAO {
 
 		return Optional.of(restaurant_id);
 	}
+	
+	public String findRestaurantNameByPw(String managerPW)  {
+		
+		String restaurant_name = "";
+		
+			try {
+				conn = JdbcTemplate.getConnection();
+				String sql = "SELECT restaurant_name FROM restaurantstest WHERE manager_pw=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, managerPW);
+				rs = pstmt.executeQuery();
+				rs.next();
+				
+				restaurant_name = rs.getString(1);
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+
+		return restaurant_name;
+	}
+	
+	
 	
 
 	

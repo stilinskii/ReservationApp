@@ -1,5 +1,8 @@
 package main.java.reservationApp.controller;
 
+import java.util.List;
+
+import main.java.reservationApp.domain.MenuDTO;
 import main.java.reservationApp.repository.MenuDAO;
 import main.java.reservationApp.repository.ReservationDAO;
 import main.java.reservationApp.repository.RestaurantDAO;
@@ -12,20 +15,27 @@ public class MenuController {
 	ReservationService reserService = new ReservationService();
 	RestaurantService restService = new RestaurantService();
 	MenuDAO menuDAO = MenuDAO.getInstance();
+	
 
 	// 메뉴 리스트
 	public void menuList(String managerPW) {
-		menuDAO.menuListByRestaurantId(restDAO.findByPw(managerPW).get());
+		menuDAO.menuListByRestaurantId(restDAO.findRestaurantIdByPw(managerPW).get())
+		.forEach(e -> System.out.println(e));
 	}
 
-	public void menuList(int restaurant_id) {
-		menuDAO.menuListByRestaurantId(restaurant_id);
+	public List<MenuDTO> menuList(int restaurant_id) {
+		return menuDAO.menuListByRestaurantId(restaurant_id);
 	}
 
+	public int menu_price(int restaurant_id,int menu_id) {
+		return menuList(restaurant_id).stream()
+				.filter(e -> e.getMenu_id() == menu_id)
+				.findAny().get().getMenu_price();
+	}
 	
 	// 메뉴등록
 	public int createMenu(String menuName, int price, String managerPW) {
-		return menuDAO.insertMenu(menuName, price, restDAO.findByPw(managerPW).get());
+		return menuDAO.insertMenu(menuName, price, restDAO.findRestaurantIdByPw(managerPW).get());
 
 	}
 
@@ -33,5 +43,7 @@ public class MenuController {
 	public int deleteMenu(int menu_id) {
 		return menuDAO.deleteMenu(menu_id);
 	}
+	
+
 
 }

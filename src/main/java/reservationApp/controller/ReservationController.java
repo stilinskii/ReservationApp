@@ -1,6 +1,7 @@
 package main.java.reservationApp.controller;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import main.java.reservationApp.domain.ReservationDTO;
@@ -12,6 +13,7 @@ public class ReservationController {
 	ReservationDAO reserDAO = ReservationDAO.getInstance();
 	RestaurantDAO restDAO = RestaurantDAO.getInstance();
 	ReservationService reserService = new ReservationService();
+	OrderController orderController = new OrderController();
 
 	// 음식점 예약, 인원수가 해당음식점 수용가능보다 많으면 예약안되게 하는 거 추가
 	public int createReservation(int reservation_id, String reservation_date, String reservation_time, int seat,
@@ -35,15 +37,21 @@ public class ReservationController {
 		reserService.statusChk(reservation_id); // 확정된 예약 취소 못하게
 	}
 
-	// 레스토랑 각각 예약 전체 목록 출력
-	public void reservationList(String managerPW){
-		reserService.findReservationByRestaurant(restDAO.findByPw(managerPW).get()).forEach(e -> System.out.println(e));
+	// 레스토랑 각각 예약 전체 목록 출력 + 주문서
+	public void allReservationsAndOrders(String managerPW){
+		reserService.allReservationsAndOrders(restDAO.findRestaurantIdByPw(managerPW).get());
 	}
 
-	// 레스토랑 각각 예약대기목록
+	// 레스토랑 각각 예약대기목록 + 주문서 완료
 	public void waitingReservations(String managerPW) {
-		reserService.waitingReservations(managerPW);
-	}
+		reserService.waitingReservationsAndOrder(managerPW);
+		}
+		
+			
+	
+			//+주문서 출력 : 필요정보 음식이름 , 수량, 가격(menu table) + 총합계(order table) (필요조건: 예약아이디)
+		
+	
 
 	// 관리자가 예약거절 
 	public void refuseReservation(int reservation_id) {

@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import main.java.reservationApp.domain.MenuDTO;
+import main.java.reservationApp.domain.OrderDTO;
 import main.java.reservationApp.domain.ReservationDTO;
 
 public class MenuDAO {
@@ -27,7 +29,7 @@ public class MenuDAO {
 	
 	//메뉴 리스트 
 	public List<MenuDTO> menuListByRestaurantId(int restaurant_id){
-		
+		List<MenuDTO> store = new ArrayList<>();
 		try {
 			String sql = "select * from menutest WHERE restaurant_id = ?";
 			pstmt = JdbcTemplate.getConnection().prepareStatement(sql);
@@ -35,20 +37,27 @@ public class MenuDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				System.out.println("[" + rs.getInt("menu_id") +"]  "+ rs.getString("menu_name")+"  "+rs.getInt("menu_price")+"원");
+				MenuDTO menuDTO = new MenuDTO(rs.getInt("menu_id"),rs.getString("menu_name"),rs.getInt("menu_price"));
+				store.add(menuDTO);
 			}
 				
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
 		}
 		
-		
-		
-		
-		return null;
+		return store;
 		
 	}
+	
+	
+	
+	
+	
 	
 	
 	
