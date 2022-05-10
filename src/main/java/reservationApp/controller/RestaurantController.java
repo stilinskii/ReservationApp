@@ -18,7 +18,8 @@ public class RestaurantController {
 	
 	//음식점 등록
 	public void addRestaurant(String name, String type, int max_seat, String manager_pw) {
-		restDAO.insertRestaurant(name, type, max_seat, manager_pw);
+		
+		restService.registerManager(name, type, max_seat, manager_pw);
 	}
 	
 	//음식점 삭제 

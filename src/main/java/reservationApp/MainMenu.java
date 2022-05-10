@@ -39,6 +39,7 @@ public class MainMenu {
 			case 4:managerRegister();break;
 			case 5:new AdminMenu();break;
 			case 0:return;
+			default: System.out.println("알맞은 숫자를 입력해주세요");
 			}
 					
 					
@@ -149,7 +150,7 @@ public class MainMenu {
 		String manager_pw = sc.next();
 		
 		restaurantController.addRestaurant(name, type, max_seat, manager_pw);
-		System.out.println("등록이 완료되었습니다. 관리자 메뉴로 이동하여 메뉴를 추가하세요.");
+		
 		
 	}
 	

@@ -3,6 +3,7 @@ package main.java.reservationApp;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+
 import main.java.reservationApp.controller.RestaurantController;
 import main.java.reservationApp.domain.ReservationDTO;
 import main.java.reservationApp.controller.MenuController;
@@ -39,8 +40,7 @@ public class AdminMenu {
 						+ "4: 예약 취소하기\r\n"
 						+ "5: 예약내역 목록 보기\r\n"
 						+ "6: 음식점 목록 보기 \r\n"
-						+ "7: 예약불가 날짜 설정하기\r\n"
-						+ "8: 퇴점하기\r\n"
+						+ "7: 퇴점하기\r\n"
 						+ "0: 메인메뉴로 이동\r\n"
 						+ "");
 				System.out.print("메뉴를 선택하세요: ");
@@ -54,8 +54,9 @@ public class AdminMenu {
 				case 4:refuseReservation(managerPW);break;
 				case 5:reservationList(managerPW);break;
 				case 6:restaurantList();break;
-				case 8:deleteRestaurant(managerPW);return;
+				case 7:deleteRestaurant(managerPW);return;
 				case 0:return;
+				default: System.out.println("알맞은 숫자를 입력해주세요");
 				}
 				
 			}
@@ -69,18 +70,16 @@ public class AdminMenu {
 	//비밀번호에따른 각 레스토랑의 예약들 리스트 출력
 	//주문서 추가
 	public static void reservationList(String managerPW) {
-		reservationController.allReservationsAndOrders(managerPW);//주문서 추가
+		reservationController.allReservationsAndOrders(managerPW);
 		
 	}
 	
-	//음식점 삭제
 	public static void deleteRestaurant(String managerPW) {
 		restaurantController.deleteRestaurant(managerPW);
 		
 		
 	}
 	
-	//주문서 추가
 	public static void confirmReservation(String managerPW) {
 		//1.비번에 따른 예약대기목록  출력
 		//2.예약번호로 예약선택 후 상태 변경
@@ -91,7 +90,6 @@ public class AdminMenu {
 		reservationController.comfirmReservations(reservation_id);
 	}
 	
-	//주문서 추가
 	public static void refuseReservation(String managerPW) {
 		System.out.println("[예약거절]");
 		reservationController.waitingReservations(managerPW);

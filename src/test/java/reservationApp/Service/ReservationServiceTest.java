@@ -14,8 +14,4 @@ public class ReservationServiceTest {
 	ReservationService rs = new ReservationService();
 	
 	
-	@Test
-	public void waitingReservationsAndOrder() {
-		rs.waitingReservationsAndOrder("12345");
-	}
 }
