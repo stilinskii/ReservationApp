@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import main.java.reservationApp.domain.ReservationDTO;
@@ -50,7 +51,7 @@ class ReservationDAOTest {
 
 	@Test
 	void updateReservationStatus() {
-		dao.updateReservationStatus(1, 22543);
+		Assertions.assertEquals(1, dao.updateReservationStatus(1, 0));
 	}
 
 }

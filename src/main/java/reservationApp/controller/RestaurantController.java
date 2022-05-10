@@ -12,13 +12,10 @@ import main.java.reservationApp.service.RestaurantService;
 
 public class RestaurantController {
 	RestaurantDAO restDAO = RestaurantDAO.getInstance();
-	ReservationDAO reserDAO = ReservationDAO.getInstance();
-	ReservationService reserService = new ReservationService();
 	RestaurantService restService = new RestaurantService();
 	
 	//음식점 등록
 	public void addRestaurant(String name, String type, int max_seat, String manager_pw) {
-		
 		restService.registerManager(name, type, max_seat, manager_pw);
 	}
 	
@@ -43,5 +40,5 @@ public class RestaurantController {
 		return restDAO.findRestaurantNameByPw(managerPW);
 	}
 	
-	//예약불가날자 설정
+	//예약불가날자 설정 - 뺌
 }

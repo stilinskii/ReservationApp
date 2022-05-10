@@ -52,17 +52,15 @@ public class MainMenu {
 	public static void reserve() {
 		//예약번호 발급을 위해
 		SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
+		int reservation_id = Integer.parseInt(sdf.format(new Date()));
 		//레스토랑 리스트 불러오기
 		System.out.println("[음식점 예약하기]");
 		restaurantController.restaurantList(); 
-		
 		// 남은 좌석수 정보도 변동되게 추가해야함....
 	
 		System.out.print("예약할 식당의 번호를 입력해주세요: ");
 		int rest_id = sc.nextInt();
 		
-		int reservation_id = Integer.parseInt(sdf.format(new Date()));
-	
 		//음식점 메뉴주문
 		orderMenu(rest_id,reservation_id);
 		
@@ -91,12 +89,12 @@ public class MainMenu {
 		
 		while(true) {
 			System.out.println("-----{ 메뉴판 }-----");
-			menuController.menuList(restaurant_id).forEach(e -> System.out.println(e));
+			menuController.menuList(restaurant_id);
 			System.out.print("주문할 메뉴의 번호:");
 			int menu_id = sc.nextInt();
 			System.out.println("수량(숫자만 적어주세요): ");
 			int count = sc.nextInt();
-			//메뉴번호가 입력된 메뉴번호의 가격불러오기
+			//메뉴가격불러오기
 			int total_price = menuController.menu_price(restaurant_id,menu_id)*count; 
 			orderController.createOrder(count, total_price, menu_id, reservation_id);
 			
@@ -117,9 +115,7 @@ public class MainMenu {
 		int reservation_id = sc.nextInt();
 		System.out.println();
 		System.out.println("<예약정보>");
-		System.out.println(reservationController.searchReservation(reservation_id));
-		System.out.print("<주문내역>");
-		orderController.bill(reservation_id);
+		reservationController.searchReservation(reservation_id);
 	}
 	
 	

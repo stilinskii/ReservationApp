@@ -33,12 +33,11 @@ public class ReservationDAO {
 	public List<ReservationDTO> reservationList() {
 		List<ReservationDTO> store = new ArrayList<>();
 		try {
-			conn = JdbcTemplate.getConnection();
 			String sql = "select rser.restaurant_id,reservation_id,TO_CHAR(reservation_date,'yyyy/mm/dd'),TO_CHAR(reservation_time,'hh24:mi'),TO_CHAR(requested_date,'yyyy/mm/dd'), TO_CHAR(requested_time,'hh24:mi'),seat,guest_name,guest_phone,reservation_state,restaurant_name "
 					+ "from reservationtest rser, restaurantstest rest "
 					+ "where rser.RESTAURANT_ID = rest.RESTAURANT_ID ";
 
-			rs = conn.createStatement().executeQuery(sql);
+			rs = JdbcTemplate.getConnection().createStatement().executeQuery(sql);
 
 			while (rs.next()) {
 
@@ -60,8 +59,6 @@ public class ReservationDAO {
 			e.printStackTrace();
 		} finally {
 			JdbcTemplate.close(rs);
-			JdbcTemplate.close(stmt);
-			JdbcTemplate.close(conn);
 		}
 
 		return store;
@@ -74,11 +71,10 @@ public class ReservationDAO {
 			int rest_id) {
 		int chk = -1;
 		try {
-			conn = JdbcTemplate.getConnection();
 			// 에약아이디, 예약일, 예약시간,( 예약한 날, 시간), 인원수, 이름, 번호, (예약상태), 레스토랑 아이디순
 			String sql = "insert into reservationtest " + "values(?,?,to_date(?,'hh24:mi'), "
 					+ "sysdate,sysdate,?,?,?,1,?) ";
-			pstmt = conn.prepareStatement(sql);
+			pstmt = JdbcTemplate.getConnection().prepareStatement(sql);
 			pstmt.setInt(1, reservation_id);// 예약아이디
 			pstmt.setString(2, reservation_date);// 예약일 20090417형식으로
 			pstmt.setString(3, reservation_time);// 예약시간 15:00형식으로
@@ -94,7 +90,6 @@ public class ReservationDAO {
 			e.printStackTrace();
 		} finally {
 			JdbcTemplate.close(pstmt);
-			JdbcTemplate.close(conn);
 		}
 
 		return chk;
@@ -109,9 +104,8 @@ public class ReservationDAO {
 	public int deleteReservation(int reservation_id) {
 		int chk = -1;
 		try {
-			conn = JdbcTemplate.getConnection();
 			String sql = "delete from reservationtest where reservation_id=?";
-			pstmt = conn.prepareStatement(sql);
+			pstmt = JdbcTemplate.getConnection().prepareStatement(sql);
 			pstmt.setInt(1, reservation_id);
 
 			chk = pstmt.executeUpdate();
@@ -121,7 +115,6 @@ public class ReservationDAO {
 			e.printStackTrace();
 		} finally {
 			JdbcTemplate.close(pstmt);
-			JdbcTemplate.close(conn);
 
 		}
 
@@ -143,7 +136,6 @@ public class ReservationDAO {
 			e.printStackTrace();
 		} finally {
 			JdbcTemplate.close(pstmt);
-			JdbcTemplate.close(conn);
 
 		}
 

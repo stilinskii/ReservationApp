@@ -40,8 +40,6 @@ public class MenuDAO {
 				MenuDTO menuDTO = new MenuDTO(rs.getInt("menu_id"),rs.getString("menu_name"),rs.getInt("menu_price"));
 				store.add(menuDTO);
 			}
-				
-			
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,28 +53,18 @@ public class MenuDAO {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	//메뉴등록
 	public int insertMenu(String menuName,int price,int restaurant_id) {
 		//아이디,메뉴이름,가격,레스토랑아이디
 		int chk = -1;
 		try {
-			conn = JdbcTemplate.getConnection();
 			String sql = "insert into menutest "
 					+ "values(menuId_num_seq.nextval,?,?,?)";
-			pstmt = conn.prepareStatement(sql);
+			pstmt = JdbcTemplate.getConnection().prepareStatement(sql);
 			pstmt.setString(1,menuName);
 			pstmt.setInt(2, price);
 			pstmt.setInt(3, restaurant_id);
 			chk = pstmt.executeUpdate();
-		}catch(SQLIntegrityConstraintViolationException e) {
-			System.out.println("해당 번호의 메뉴가 이미 존재합니다.");
 		
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
@@ -93,9 +81,8 @@ public class MenuDAO {
 	public int deleteMenu(int menu_id) {
 		int chk = -1;
 		try {
-			conn = JdbcTemplate.getConnection();
 			String sql = "DELETE FROM menutest WHERE menu_id=?";
-			pstmt = conn.prepareStatement(sql);
+			pstmt = JdbcTemplate.getConnection().prepareStatement(sql);
 			pstmt.setInt(1, menu_id);
 			 chk = pstmt.executeUpdate();
 			

@@ -13,8 +13,6 @@ public class RestaurantDAO {
 	private Statement stmt;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
-
-	 
 	
 	private static RestaurantDAO restaurantDAO = new RestaurantDAO();
 	

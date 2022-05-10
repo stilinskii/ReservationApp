@@ -62,29 +62,21 @@ public class AdminMenu {
 			}
 			
 		
-		
-
-		
-		
 	}
 	//비밀번호에따른 각 레스토랑의 예약들 리스트 출력
-	//주문서 추가
 	public static void reservationList(String managerPW) {
-		reservationController.allReservationsAndOrders(managerPW);
-		
+		reservationController.allReservations(managerPW);
 	}
 	
 	public static void deleteRestaurant(String managerPW) {
 		restaurantController.deleteRestaurant(managerPW);
-		
-		
 	}
 	
 	public static void confirmReservation(String managerPW) {
 		//1.비번에 따른 예약대기목록  출력
-		//2.예약번호로 예약선택 후 상태 변경
 		System.out.println("[예약승인]");
 		reservationController.waitingReservations(managerPW);
+		//2.예약번호로 예약선택 후 상태 변경
 		System.out.print("예약번호를 입력해주세요: ");
 		int reservation_id = sc.nextInt();
 		reservationController.comfirmReservations(reservation_id);

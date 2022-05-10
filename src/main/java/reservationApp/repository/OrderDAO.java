@@ -26,8 +26,6 @@ public class OrderDAO {
 	//이거... 객체반환으로 변경..
 		public List<OrderDTO> menuOrderList(int reservation_id) {
 			List<OrderDTO> store = new ArrayList<>();
-			//int real_total = 0;
-			
 			try {
 			String sql = "select m.menu_name,o.count,m.menu_price,o.total_price "
 					+ "from menutest m,ordertest o "
@@ -45,11 +43,7 @@ public class OrderDAO {
 					OrderDTO orderDTO = new OrderDTO(rs.getInt("count"),rs.getInt("total_price"),menuDTO);
 					store.add(orderDTO);
 
-				//	int total_price = rs.getInt("total_price")*count
-				//	real_total += total_price;
-				
 				}
-				//System.out.println(" 총합계: " + real_total+"원");
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
