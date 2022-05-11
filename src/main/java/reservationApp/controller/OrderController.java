@@ -21,6 +21,7 @@ public class OrderController {
 	public void bill(int reservation_id) {
 		List<OrderDTO> orderList = orderDAO.menuOrderList(reservation_id);
 		int total=0;
+		
 		for(OrderDTO order:orderList) {
 			System.out.println(order);
 			total += order.getTotal_price();

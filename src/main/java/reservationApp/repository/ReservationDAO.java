@@ -97,9 +97,7 @@ public class ReservationDAO {
 
 
 
-//	public void clearStore() {
-//		store.clear();
-//	}
+
 
 	public int deleteReservation(int reservation_id) {
 		int chk = -1;

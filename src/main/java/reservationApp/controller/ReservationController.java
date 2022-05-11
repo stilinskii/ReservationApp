@@ -47,16 +47,16 @@ public class ReservationController {
 		
 	
 	// 예약정보들을 리스트로 받아서 그에맞는 주문서와 함께 출력
-		public void ReservationsWithOrders(List<ReservationDTO> reservationlist) {
+		public void ReservationsWithOrders(List<ReservationDTO> reservationList) {
 			int total = 0;
-			if (reservationlist.isEmpty()) {
+			if (reservationList.isEmpty()) {
 				System.out.println("예약이 존재하지 않습니다.");
 			} else {
-				for (int i = 0; i < reservationlist.size(); i++) {
+				for (ReservationDTO reservation:reservationList) {
 					System.out.println();
 					System.out.println("<예약정보>");
-					System.out.print(reservationlist.get(i));
-					List<OrderDTO> orderList = orderDAO.menuOrderList(reservationlist.get(i).getReservation_id());
+					System.out.print(reservation);
+					List<OrderDTO> orderList = orderDAO.menuOrderList(reservation.getReservation_id());
 					System.out.println("<주문정보>");
 					for (OrderDTO order : orderList) {
 						System.out.println(order);
@@ -77,7 +77,7 @@ public class ReservationController {
 		System.out.println(chk + "개 예약거절 완료");
 	}
 
-	// 관리자가 예약승인 --예약이 없을떄?..
+	// 관리자가 예약승인
 	public void comfirmReservations(int reservation_id) {
 		int chk = reserDAO.updateReservationStatus(2, reservation_id);
 		System.out.println(chk + "개 예약승인 완료");

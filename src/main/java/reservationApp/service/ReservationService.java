@@ -41,7 +41,8 @@ public class ReservationService {
 	// 레스토랑마다 대기중 예약목록 출력
 	public List<ReservationDTO> waitingReservations(String managerPW) {
 		List<ReservationDTO> alist = new ArrayList<>();
-		findReservationByRestaurant(managerPW).stream().filter(value -> value.getReservation_state_num() == 1)
+		findReservationByRestaurant(managerPW).stream()
+				.filter(value -> value.getReservation_state_num() == 1)
 				.forEach(e -> alist.add(e));
 		return alist;
 	}

@@ -102,7 +102,7 @@ public class MainMenu {
 			if(sc.next().equals("y")==false) {
 				return;
 			}
-			}
+		}
 		
 	}
 	
