@@ -31,8 +31,7 @@ public class MenuDAO {
 	public List<MenuDTO> menuListByRestaurantId(int restaurant_id){
 		List<MenuDTO> store = new ArrayList<>();
 		try {
-			String sql = "select * from menutest WHERE restaurant_id = ?";
-			pstmt = JdbcTemplate.getConnection().prepareStatement(sql);
+			pstmt = JdbcTemplate.getConnection().prepareStatement("select * from menutest WHERE restaurant_id = ?");
 			pstmt.setInt(1, restaurant_id);
 			rs = pstmt.executeQuery();
 			
@@ -81,8 +80,7 @@ public class MenuDAO {
 	public int deleteMenu(int menu_id) {
 		int chk = -1;
 		try {
-			String sql = "DELETE FROM menutest WHERE menu_id=?";
-			pstmt = JdbcTemplate.getConnection().prepareStatement(sql);
+			pstmt = JdbcTemplate.getConnection().prepareStatement("DELETE FROM menutest WHERE menu_id=?");
 			pstmt.setInt(1, menu_id);
 			 chk = pstmt.executeUpdate();
 			

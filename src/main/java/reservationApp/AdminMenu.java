@@ -88,7 +88,6 @@ public class AdminMenu {
 		System.out.print("예약번호를 입력해주세요: ");
 		int reservation_id = sc.nextInt();
 		reservationController.refuseReservation(reservation_id);
-		
 	}
 	
 	public static void restaurantList() {

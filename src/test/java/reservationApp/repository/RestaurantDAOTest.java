@@ -19,10 +19,10 @@ class RestaurantDAOTest {
 //		fail("Not yet implemented");
 //	}
 	
-	@Test
-	void deleteRestaurant() {
-		Assertions.assertEquals(1, dao.deleteRestaurant("12345"));
-	}
+//	@Test
+//	void deleteRestaurant() {
+//		Assertions.assertEquals(1, dao.deleteRestaurant("12345"));
+//	}
 	
 //	@Test
 //	void listRestaurant() {

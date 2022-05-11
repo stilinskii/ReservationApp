@@ -59,8 +59,7 @@ public class OrderDAO {
 		//count, total_price, menu_id, reservation_id 모두 int
 		int chk = -1;
 		try {
-			String sql = "insert into ordertest values(?,?,?,?)";
-			pstmt = JdbcTemplate.getConnection().prepareStatement(sql);
+			pstmt = JdbcTemplate.getConnection().prepareStatement("insert into ordertest values(?,?,?,?)");
 			pstmt.setInt(1,count);
 			pstmt.setInt(2,total_price);
 			pstmt.setInt(3,menu_id);

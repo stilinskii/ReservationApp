@@ -102,8 +102,7 @@ public class ReservationDAO {
 	public int deleteReservation(int reservation_id) {
 		int chk = -1;
 		try {
-			String sql = "delete from reservationtest where reservation_id=?";
-			pstmt = JdbcTemplate.getConnection().prepareStatement(sql);
+			pstmt = JdbcTemplate.getConnection().prepareStatement("delete from reservationtest where reservation_id=?");
 			pstmt.setInt(1, reservation_id);
 
 			chk = pstmt.executeUpdate();
@@ -122,8 +121,8 @@ public class ReservationDAO {
 	public int updateReservationStatus(int statusNum, int reserv_id) {
 		int chk = -1;
 		try {
-			String sql = "UPDATE reservationtest SET reservation_state = ? WHERE RESERVATION_ID=?";
-			pstmt = JdbcTemplate.getConnection().prepareStatement(sql);
+			pstmt = JdbcTemplate.getConnection()
+					.prepareStatement("UPDATE reservationtest SET reservation_state = ? WHERE RESERVATION_ID=?");
 			pstmt.setInt(1, statusNum);
 			pstmt.setInt(2, reserv_id);
 

@@ -25,13 +25,11 @@ public class RestaurantDAO {
 		
 		try {
 			
-			String sql = "select RESTAURANT_ID,RESTAURANT_NAME,RESTAURANT_TYPE,AVAILABLE_SEAT,AVAILABLE_STATE from restaurantstest";
+			String sql = "select RESTAURANT_ID,RESTAURANT_NAME,RESTAURANT_TYPE,AVAILABLE_SEAT,WORKING_TIME from restaurantstest";
 			rs = JdbcTemplate.getConnection().createStatement().executeQuery(sql);
 			
 			while(rs.next()) {
-				System.out.println("["+rs.getInt(1)+"]" + "  " + rs.getString(2) + "  " + rs.getString(3)
-				+ "   남은자리:"+rs.getInt(4)+"개");
-				
+				System.out.printf("[%2d]   %-13s %-5s %5d개  %18s\n",rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5));
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -45,6 +43,30 @@ public class RestaurantDAO {
 		
 	}
 	
+	public String restaurantWorkingTime(int restaurant_id) {
+		String workingTime = "";
+		try {
+			pstmt = JdbcTemplate.getConnection().prepareStatement("select WORKING_TIME from restaurantstest where RESTAURANT_ID = ?");
+			pstmt.setInt(1, restaurant_id);
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			workingTime = rs.getString(1);
+		
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(stmt);
+			JdbcTemplate.close(conn);
+		}
+		
+		return workingTime;
+	}
+	
 	
 	
 	
@@ -53,9 +75,8 @@ public class RestaurantDAO {
 		
 		int chk = -1;
 		try {
-			conn = JdbcTemplate.getConnection();
 			String sql = "insert into restaurantstest values(restaurantstest_num_seq.nextval,?,?,?,?,?,?,null,?)";
-			pstmt = conn.prepareStatement(sql);
+			pstmt = JdbcTemplate.getConnection().prepareStatement(sql);
 			//pstmt.setInt(1, Integer.parseInt(sdf.format(new Date()))); //id
 			pstmt.setString(1, name); //name
 			pstmt.setString(2, type); // type
@@ -79,14 +100,12 @@ public class RestaurantDAO {
 		return chk;
 	}
 	
-	public int deleteRestaurant(String managerPw){
-		int chk=-1;;
+	public void deleteRestaurant(String managerPw){
 		try {
 			conn = JdbcTemplate.getConnection();
-			String sql = "DELETE FROM restaurantstest WHERE manager_pw=?";
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement("DELETE FROM restaurantstest WHERE manager_pw=?");
 			pstmt.setString(1, managerPw);
-			 chk = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 			
 		}catch(SQLIntegrityConstraintViolationException e) {
 			System.out.println("남은 예약이 존재합니다.");
@@ -98,7 +117,6 @@ public class RestaurantDAO {
 			JdbcTemplate.close(conn);
 		}
 		
-		return chk;
 	}
 	
 	//비밀번호에다른 음식점 아이디
@@ -108,8 +126,7 @@ public class RestaurantDAO {
 		
 			try {
 				conn = JdbcTemplate.getConnection();
-				String sql = "SELECT restaurant_id FROM restaurantstest WHERE manager_pw=?";
-				pstmt = conn.prepareStatement(sql);
+				pstmt = conn.prepareStatement("SELECT restaurant_id FROM restaurantstest WHERE manager_pw=?");
 				pstmt.setString(1, managerPW);
 				rs = pstmt.executeQuery();
 				rs.next();
@@ -118,6 +135,10 @@ public class RestaurantDAO {
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}finally {
+				JdbcTemplate.close(rs);
+				JdbcTemplate.close(pstmt);
+				JdbcTemplate.close(conn);
 			}
 			
 
@@ -129,9 +150,7 @@ public class RestaurantDAO {
 		String restaurant_name = "";
 		
 			try {
-				conn = JdbcTemplate.getConnection();
-				String sql = "SELECT restaurant_name FROM restaurantstest WHERE manager_pw=?";
-				pstmt = conn.prepareStatement(sql);
+				pstmt = JdbcTemplate.getConnection().prepareStatement("SELECT restaurant_name FROM restaurantstest WHERE manager_pw=?");
 				pstmt.setString(1, managerPW);
 				rs = pstmt.executeQuery();
 				rs.next();
@@ -140,6 +159,9 @@ public class RestaurantDAO {
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}finally {
+				JdbcTemplate.close(rs);
+				JdbcTemplate.close(pstmt);
 			}
 			
 

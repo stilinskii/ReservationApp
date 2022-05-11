@@ -41,12 +41,11 @@ public class MainMenu {
 			case 0:return;
 			default: System.out.println("알맞은 숫자를 입력해주세요");
 			}
-					
-					
 		}
-		
-		
 	}
+	
+	
+	
 	
 	//음식점 예약
 	public static void reserve() {
@@ -64,11 +63,11 @@ public class MainMenu {
 		//음식점 메뉴주문
 		orderMenu(rest_id,reservation_id);
 		
-		
 		System.out.print("예약일을 입력해주세요(예: 20220508): ");
 		String reservation_date = sc.next();
-		System.out.print("예약시간 입력해주세요(예:15:00): ");
-		String reservation_time = sc.next();
+		//예약시간 영업시간 안에 한건지 체크
+		String reservation_time = reservationTimeChk(rest_id);
+		
 		System.out.print("인원수를 입력해주세요: ");
 		int seat = sc.nextInt();
 		System.out.print("예약자 성함을 입력해주세요: ");
@@ -83,6 +82,19 @@ public class MainMenu {
 	}
 	
 	
+	public static String reservationTimeChk(int restaurant_id) {
+		String reservation_time = "";
+		while(true) {
+			System.out.print("예약시간 입력해주세요(예:15:00): ");
+			reservation_time = sc.next();
+			if(restaurantController.timeChk(reservation_time, restaurant_id)) {
+				return reservation_time;
+			}else {
+				System.out.println("영업시간 내로 입력해주세요.");
+			}
+		}
+		
+	}
 	
 	
 	public static void orderMenu(int restaurant_id, int reservation_id) {
@@ -92,7 +104,7 @@ public class MainMenu {
 			menuController.menuList(restaurant_id);
 			System.out.print("주문할 메뉴의 번호:");
 			int menu_id = sc.nextInt();
-			System.out.println("수량(숫자만 적어주세요): ");
+			System.out.print("수량(숫자만 적어주세요): ");
 			int count = sc.nextInt();
 			//메뉴가격불러오기
 			int total_price = menuController.menu_price(restaurant_id,menu_id)*count; 
@@ -114,7 +126,6 @@ public class MainMenu {
 		System.out.print("예약번호를 입력해주세요: ");
 		int reservation_id = sc.nextInt();
 		System.out.println();
-		System.out.println("<예약정보>");
 		reservationController.searchReservation(reservation_id);
 	}
 	
@@ -126,7 +137,6 @@ public class MainMenu {
 		int reservation_id = sc.nextInt();
 		reservationController.cancelReservation(reservation_id);
 		System.out.println("에약 취소가 완료되었습니다.");
-		
 	}
 	
 	
@@ -146,8 +156,6 @@ public class MainMenu {
 		String manager_pw = sc.next();
 		
 		restaurantController.addRestaurant(name, type, max_seat, manager_pw);
-		
-		
 	}
 	
 	
