@@ -1,11 +1,9 @@
 package main.java.reservationApp;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 
 import main.java.reservationApp.controller.RestaurantController;
-import main.java.reservationApp.domain.ReservationDTO;
 import main.java.reservationApp.controller.MenuController;
 import main.java.reservationApp.controller.ReservationController;
 
@@ -18,18 +16,11 @@ public class AdminMenu {
 	public AdminMenu() {
 		
 		//관리자메뉴로 이동
-			
 			System.out.println("[관리자 인증]");
 			System.out.print("비밀번호: ");
 			String managerPW = sc.next();
-			try {
-				restaurantController.chkManagerPw(managerPW);
-			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
-				System.out.println("비밀번호 불일치");
-				return;
-			}
-			
+			restaurantController.chkManagerPw(managerPW);//비밀번호 인증
+					
 			
 			while(true) {
 				System.out.println("[<"+restaurantController.findRestaurantNameByPw(managerPW)
@@ -61,18 +52,17 @@ public class AdminMenu {
 				
 			}
 			
-		
 	}
 	//비밀번호에따른 각 레스토랑의 예약들 리스트 출력
-	public static void reservationList(String managerPW) {
+	public void reservationList(String managerPW) {
 		reservationController.allReservations(managerPW);
 	}
 	
-	public static void deleteRestaurant(String managerPW) {
+	public void deleteRestaurant(String managerPW) {
 		restaurantController.deleteRestaurant(managerPW);
 	}
 	
-	public static void confirmReservation(String managerPW) {
+	public void confirmReservation(String managerPW) {
 		//1.비번에 따른 예약대기목록  출력
 		System.out.println("[예약승인]");
 		reservationController.waitingReservations(managerPW);
@@ -82,7 +72,7 @@ public class AdminMenu {
 		reservationController.comfirmReservations(reservation_id);
 	}
 	
-	public static void refuseReservation(String managerPW) {
+	public void refuseReservation(String managerPW) {
 		System.out.println("[예약거절]");
 		reservationController.waitingReservations(managerPW);
 		System.out.print("예약번호를 입력해주세요: ");
@@ -90,11 +80,11 @@ public class AdminMenu {
 		reservationController.refuseReservation(reservation_id);
 	}
 	
-	public static void restaurantList() {
+	public void restaurantList() {
 		restaurantController.restaurantList();
 	}
 	
-	public static void createMenu(String managerPW) {
+	public void createMenu(String managerPW) {
 		sc.nextLine();
 		System.out.println("[메뉴등록]");
 		System.out.print("메뉴이름: ");
@@ -106,7 +96,7 @@ public class AdminMenu {
 		System.out.println("메뉴 "+menuController.createMenu(menu_name, menu_price, managerPW)+"개 추가 완료");
 	}
 	
-	public static void deleteMenu(String managerPW) {
+	public void deleteMenu(String managerPW) {
 		System.out.println("[메뉴삭제]");
 		menuController.menuList(managerPW);
 		System.out.print("삭제할 메뉴의 번호를 입력하세요: ");

@@ -5,69 +5,66 @@ import java.util.Date;
 import java.util.Scanner;
 
 import main.java.reservationApp.controller.RestaurantController;
+import main.java.reservationApp.service.RestaurantService;
 import main.java.reservationApp.controller.MenuController;
 import main.java.reservationApp.controller.OrderController;
 import main.java.reservationApp.controller.ReservationController;
 
 public class MainMenu {
-	static Scanner sc = new Scanner(System.in);
-	static ReservationController reservationController = new ReservationController();
-	static RestaurantController restaurantController = new RestaurantController();
-	static MenuController menuController = new MenuController();
-	static OrderController orderController = new OrderController();
+	Scanner sc = new Scanner(System.in);
+	ReservationController reservationController = new ReservationController();
+	RestaurantController restaurantController = new RestaurantController();
+	MenuController menuController = new MenuController();
+	OrderController orderController = new OrderController();
 	
-	public static void main(String[] args) {
+	
+		public MainMenu() {	
 		
-		
-		while(true){
-			System.out.println("[메인화면]");
-			System.out.println("1: 음식점 예약하기\r\n"
-					+ "2: 예약 확인하기\r\n"
-					+ "3: 예약 취소하기\r\n"
-					+ "4: 관리자 등록(입점하기)\r\n"
-					+ "5: 관리자 메뉴로 이동\r\n"
-					+ "0: 종료\r\n");
-			System.out.print("메뉴를 선택하세요: ");
-			int num = sc.nextInt();		
-			
-			
-			
-			switch (num){
-			case 1:reserve();break;
-			case 2:searchReservation();break;
-			case 3:deleteReservation();break;
-			case 4:managerRegister();break;
-			case 5:new AdminMenu();break;
-			case 0:return;
-			default: System.out.println("알맞은 숫자를 입력해주세요");
+			while(true){
+				System.out.println("[메인화면]");
+				System.out.println("1: 음식점 예약하기\r\n"
+						+ "2: 예약 확인하기\r\n"
+						+ "3: 예약 취소하기\r\n"
+						+ "4: 관리자 등록(입점하기)\r\n"
+						+ "5: 관리자 메뉴로 이동\r\n"
+						+ "0: 종료\r\n");
+				System.out.print("메뉴를 선택하세요: ");
+				int num = sc.nextInt();		
+				
+				
+				
+				switch (num){
+				case 1:reserve();break;
+				case 2:searchReservation();break;
+				case 3:deleteReservation();break;
+				case 4:managerRegister();break;
+				case 5:new AdminMenu();break;
+				case 0:return;
+				default: System.out.println("알맞은 숫자를 입력해주세요");
+				}
 			}
 		}
-	}
-	
+		
 	
 	
 	
 	//음식점 예약
-	public static void reserve() {
+	public void reserve() {
 		//예약번호 발급을 위해
 		SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
 		int reservation_id = Integer.parseInt(sdf.format(new Date()));
 		//레스토랑 리스트 불러오기
 		System.out.println("[음식점 예약하기]");
 		restaurantController.restaurantList(); 
-		// 남은 좌석수 정보도 변동되게 추가해야함....
+		// 남은 좌석수 정보도 변동되게 추가해야함.... - 뺌
 	
 		System.out.print("예약할 식당의 번호를 입력해주세요: ");
 		int rest_id = sc.nextInt();
 		
-		//음식점 메뉴주문
-		orderMenu(rest_id,reservation_id);
-		
+		orderMenu(rest_id,reservation_id);//음식점 메뉴판 보고 메뉴 선택
 		System.out.print("예약일을 입력해주세요(예: 20220508): ");
 		String reservation_date = sc.next();
-		//예약시간 영업시간 안에 한건지 체크
-		String reservation_time = reservationTimeChk(rest_id);
-		
+		String reservation_time = reservationTimeChk(rest_id);//예약시간 영업시간 안에 한건지 체크
 		System.out.print("인원수를 입력해주세요: ");
 		int seat = sc.nextInt();
 		System.out.print("예약자 성함을 입력해주세요: ");
@@ -82,7 +79,7 @@ public class MainMenu {
 	}
 	
 	
-	public static String reservationTimeChk(int restaurant_id) {
+	public String reservationTimeChk(int restaurant_id) {
 		String reservation_time = "";
 		while(true) {
 			System.out.print("예약시간 입력해주세요(예:15:00): ");
@@ -97,7 +94,7 @@ public class MainMenu {
 	}
 	
 	
-	public static void orderMenu(int restaurant_id, int reservation_id) {
+	public void orderMenu(int restaurant_id, int reservation_id) {
 		
 		while(true) {
 			System.out.println("-----{ 메뉴판 }-----");
@@ -121,7 +118,7 @@ public class MainMenu {
 	
 	
 	//발급번호로 예약 조회
-	public static void searchReservation() {
+	public void searchReservation() {
 		System.out.println("[예약 조회하기]");
 		System.out.print("예약번호를 입력해주세요: ");
 		int reservation_id = sc.nextInt();
@@ -131,7 +128,7 @@ public class MainMenu {
 	
 	
 	//예약취소
-	public static void deleteReservation() {
+	public void deleteReservation() {
 		System.out.println("[예약 취소하기]");
 		System.out.print("예약번호를 입력해주세요: ");
 		int reservation_id = sc.nextInt();
@@ -141,7 +138,7 @@ public class MainMenu {
 	
 	
 	//입점하기
-	public static void managerRegister() {
+	public void managerRegister() {
 		sc.nextLine();
 		System.out.println("[음식점 등록하기]");
 		//String name, String type, int max_seat, String manager_pw 최대10자
@@ -154,9 +151,9 @@ public class MainMenu {
 		sc.nextLine();
 		System.out.print("관리자 비밀번호 설정(문자,숫자포함5자): ");
 		String manager_pw = sc.next();
-		
-		restaurantController.addRestaurant(name, type, max_seat, manager_pw);
+		System.out.print("영업시간을 입력해주세요(09:00~22:00): ");
+		String workingTime = sc.next();
+		restaurantController.addRestaurant(name, type, max_seat, manager_pw, workingTime);
 	}
-	
 	
 }

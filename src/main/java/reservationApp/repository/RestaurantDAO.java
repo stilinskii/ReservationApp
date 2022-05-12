@@ -8,6 +8,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.Optional;
 
+import main.java.reservationApp.MainMenu;
+
 public class RestaurantDAO {
 	private Connection conn;
 	private Statement stmt;
@@ -24,7 +26,6 @@ public class RestaurantDAO {
 	public void listRestaurant() {
 		
 		try {
-			
 			String sql = "select RESTAURANT_ID,RESTAURANT_NAME,RESTAURANT_TYPE,AVAILABLE_SEAT,WORKING_TIME from restaurantstest";
 			rs = JdbcTemplate.getConnection().createStatement().executeQuery(sql);
 			
@@ -71,11 +72,11 @@ public class RestaurantDAO {
 	
 	
 	
-	public int insertRestaurant(String name, String type, int max_seat, String manager_pw){
+	public int insertRestaurant(String name, String type, int max_seat, String manager_pw, String workingTime){
 		
 		int chk = -1;
 		try {
-			String sql = "insert into restaurantstest values(restaurantstest_num_seq.nextval,?,?,?,?,?,?,null,?)";
+			String sql = "insert into restaurantstest values(restaurantstest_num_seq.nextval,?,?,?,?,?,?,?,?)";
 			pstmt = JdbcTemplate.getConnection().prepareStatement(sql);
 			//pstmt.setInt(1, Integer.parseInt(sdf.format(new Date()))); //id
 			pstmt.setString(1, name); //name
@@ -84,7 +85,8 @@ public class RestaurantDAO {
 			pstmt.setInt(4, 0); //reserved
 			pstmt.setInt(5, max_seat); // available
 			pstmt.setString(6, "O"); // status
-			pstmt.setString(7, manager_pw); // manager_pw
+			pstmt.setString(7, workingTime);
+			pstmt.setString(8, manager_pw); // manager_pw
 			
 			
 			chk = pstmt.executeUpdate();
@@ -133,8 +135,8 @@ public class RestaurantDAO {
 				
 				restaurant_id = rs.getInt(1);
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("비밀번호 불일치");
+				new MainMenu();
 			}finally {
 				JdbcTemplate.close(rs);
 				JdbcTemplate.close(pstmt);
@@ -144,6 +146,32 @@ public class RestaurantDAO {
 
 		return Optional.of(restaurant_id);
 	}
+	
+
+	public Optional<Integer> findRestaurantIdByPw2(String managerPW)  {
+		
+		int restaurant_id = 0;
+		
+			try {
+				conn = JdbcTemplate.getConnection();
+				pstmt = conn.prepareStatement("SELECT restaurant_id FROM restaurantstest WHERE manager_pw=?");
+				pstmt.setString(1, managerPW);
+				rs = pstmt.executeQuery();
+				rs.next();
+				
+				restaurant_id = rs.getInt(1);
+			} catch (ClassNotFoundException | SQLException e) {
+				return Optional.ofNullable(null);
+			}finally {
+				JdbcTemplate.close(rs);
+				JdbcTemplate.close(pstmt);
+				JdbcTemplate.close(conn);
+			}
+			
+
+		return Optional.of(restaurant_id);
+	}
+	
 	
 	public String findRestaurantNameByPw(String managerPW)  {
 		

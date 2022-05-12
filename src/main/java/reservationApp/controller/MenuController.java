@@ -11,9 +11,6 @@ import main.java.reservationApp.service.RestaurantService;
 
 public class MenuController {
 	RestaurantDAO restDAO = RestaurantDAO.getInstance();
-	ReservationDAO reserDAO = ReservationDAO.getInstance();
-	ReservationService reserService = new ReservationService();
-	RestaurantService restService = new RestaurantService();
 	MenuDAO menuDAO = MenuDAO.getInstance();
 	
 

@@ -12,10 +12,8 @@ import main.java.reservationApp.service.ReservationService;
 
 public class ReservationController {
 	ReservationDAO reserDAO = ReservationDAO.getInstance();
-	RestaurantDAO restDAO = RestaurantDAO.getInstance();
 	OrderDAO orderDAO = OrderDAO.getInstance();
 	ReservationService reserService = new ReservationService();
-	OrderController orderController = new OrderController();
 
 	// 음식점 예약, 인원수가 해당음식점 수용가능보다 많으면 예약안되게 하는 거 추가 - 실패
 	public int createReservation(int reservation_id, String reservation_date, String reservation_time, int seat,
@@ -26,8 +24,7 @@ public class ReservationController {
 
 	// 발급번호로 예약 조회
 	public void searchReservation(int reservation_id) {
-		ReservationsWithOrders(reserService.findReservationById2(reservation_id));
-
+		ReservationsWithOrders(reserService.findReservationByIdToList(reservation_id));
 	}
 
 	// 예약 취소

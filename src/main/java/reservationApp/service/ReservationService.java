@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import main.java.reservationApp.domain.ReservationDTO;
 import main.java.reservationApp.repository.ReservationDAO;
@@ -31,10 +32,11 @@ public class ReservationService {
 				.findAny();
 	}
 	
-	public List<ReservationDTO> findReservationById2(int reservation_id) {
-		return Arrays.asList(reserDAO.reservationList().stream()
-				.filter(value -> value.getReservation_id() == reservation_id)
-				.toArray(ReservationDTO[]::new));
+	public List<ReservationDTO> findReservationByIdToList(int reservation_id) {
+		return findReservationById(reservation_id).stream().collect(Collectors.toList());
+//		return Arrays.asList(reserDAO.reservationList().stream()
+//				.filter(value -> value.getReservation_id() == reservation_id)
+//				.toArray(ReservationDTO[]::new));
 	}
 
 	
